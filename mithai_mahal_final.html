@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mithai Mahal — Artisan Indian Sweets</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8A020;
+    --saffron-light: #F9D585;
+    --saffron-pale: #FFF8E7;
+    --rose: #C4445A;
+    --rose-light: #F2A0B0;
+    --rose-pale: #FFF0F3;
+    --cardamom: #4A7C59;
+    --cream: #FDF6E3;
+    --dark: #1C1208;
+    --text: #2E1A0E;
+    --text-muted: #7A5C3A;
+    --border: rgba(200,150,80,0.2);
+    --gold: #C8973C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Cormorant Garamond', serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(253,246,227,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--dark); letter-spacing: 0.02em; text-decoration: none; }
+  .nav-logo span { color: var(--saffron); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-cta { font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; background: var(--saffron); color: #fff; border: none; cursor: pointer; padding: 10px 24px; border-radius: 2px; transition: background 0.2s; text-decoration: none; }
+  .nav-cta:hover { background: var(--rose); }
+  .nav-cart-btn {
+    font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--dark); color: var(--saffron-light); border: none; cursor: pointer;
+    padding: 10px 20px; border-radius: 2px; transition: background 0.2s;
+    display: flex; align-items: center; gap: 8px; margin-left: 10px;
+  }
+  .nav-cart-btn:hover { background: var(--rose); color: #fff; }
+  .cart-badge {
+    background: var(--rose); color: #fff;
+    width: 18px; height: 18px; border-radius: 50%;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-left { padding: 140px 5vw 80px 8vw; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+  .hero-eyebrow { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--saffron); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--saffron); }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 5vw, 80px); line-height: 1.1; font-weight: 700; color: var(--dark); margin-bottom: 28px; }
+  .hero-title em { font-style: italic; color: var(--rose); }
+  .hero-subtitle { font-size: 20px; line-height: 1.7; color: var(--text-muted); max-width: 420px; margin-bottom: 48px; font-weight: 300; }
+  .hero-actions { display: flex; gap: 16px; align-items: center; }
+  .btn-primary { background: var(--saffron); color: #fff; font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; padding: 16px 36px; border: none; cursor: pointer; border-radius: 2px; text-decoration: none; transition: all 0.25s; display: inline-block; }
+  .btn-primary:hover { background: var(--dark); transform: translateY(-2px); }
+  .btn-ghost { color: var(--text); font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; padding: 16px 0; text-decoration: none; border-bottom: 1px solid var(--gold); transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--rose); }
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-pattern { position: absolute; inset: 0; background: radial-gradient(circle at 60% 40%, rgba(232,160,32,0.12) 0%, transparent 55%), radial-gradient(circle at 30% 70%, rgba(196,68,90,0.08) 0%, transparent 40%); }
+  .hero-mandala { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px; opacity: 0.06; }
+  .hero-cards { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .hero-float-card { position: absolute; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; box-shadow: 0 8px 40px rgba(28,18,8,0.12); width: 160px; text-align: center; transition: transform 0.3s ease; }
+  .hero-float-card:hover { transform: translateY(-6px) rotate(0deg) !important; }
+  .hero-float-card .emoji { font-size: 36px; margin-bottom: 8px; }
+  .hero-float-card .name { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; color: var(--dark); }
+  .hero-float-card .tag { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+  .card-1 { top: 15%; left: 12%; transform: rotate(-4deg); }
+  .card-2 { top: 8%; right: 8%; transform: rotate(3deg); }
+  .card-3 { bottom: 22%; left: 5%; transform: rotate(2deg); }
+  .card-4 { bottom: 12%; right: 10%; transform: rotate(-3deg); }
+  .card-5 { top: 50%; left: 40%; transform: translate(-50%, -50%) rotate(1deg) scale(1.1); }
+
+  /* MARQUEE */
+  .marquee-wrap { background: var(--dark); padding: 14px 0; overflow: hidden; }
+  .marquee-track { display: flex; animation: marquee 30s linear infinite; white-space: nowrap; }
+  .marquee-track span { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron-light); padding: 0 40px; }
+  .marquee-track .dot { color: var(--rose); padding: 0; font-size: 16px; line-height: 1; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  section { padding: 100px 8vw; }
+  .section-label { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--saffron); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; max-width: 60px; background: var(--saffron); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3.5vw, 52px); line-height: 1.15; color: var(--dark); margin-bottom: 16px; }
+  .section-sub { font-size: 18px; font-weight: 300; color: var(--text-muted); max-width: 560px; line-height: 1.7; }
+
+  /* FILTER */
+  .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin: 48px 0 36px; }
+  .filter-btn { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 9px 20px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--saffron); border-color: var(--saffron); color: #fff; }
+
+  /* MENU GRID */
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+  .sweet-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: all 0.3s; cursor: pointer; position: relative; }
+  .sweet-card:hover { box-shadow: 0 16px 48px rgba(28,18,8,0.12); transform: translateY(-4px); }
+  .sweet-card-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 60px; position: relative; overflow: hidden; }
+  .sweet-card-badge { position: absolute; top: 12px; right: 12px; font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; font-weight: 600; }
+  .badge-veg { background: #E8F5E9; color: #2E7D32; }
+  .badge-popular { background: var(--saffron-pale); color: var(--saffron); }
+  .sweet-card-body { padding: 18px 20px 20px; }
+  .sweet-card-region { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .sweet-card-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--dark); margin-bottom: 8px; }
+  .sweet-card-desc { font-size: 14px; line-height: 1.6; color: var(--text-muted); margin-bottom: 16px; font-weight: 300; }
+  .sweet-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .sweet-card-price { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: var(--saffron); }
+  .sweet-card-price span { font-size: 12px; color: var(--text-muted); font-family: 'Josefin Sans', sans-serif; letter-spacing: 0.05em; }
+  .add-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--saffron); color: #fff; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; line-height: 1; }
+  .add-btn:hover { background: var(--rose); transform: scale(1.1); }
+  .bg-saffron { background: linear-gradient(135deg, #FFF8E7 0%, #FFE9A0 100%); }
+  .bg-rose { background: linear-gradient(135deg, #FFF0F3 0%, #FFD6DE 100%); }
+  .bg-green { background: linear-gradient(135deg, #F0FFF4 0%, #C6F6D5 100%); }
+  .bg-orange { background: linear-gradient(135deg, #FFF5EC 0%, #FFD8A8 100%); }
+  .bg-purple { background: linear-gradient(135deg, #F8F0FF 0%, #E9D5FF 100%); }
+  .bg-brown { background: linear-gradient(135deg, #FDF3E7 0%, #F9D9AB 100%); }
+
+  /* HERITAGE */
+  .heritage { background: var(--dark); padding: 80px 8vw; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
+  .heritage-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+  .stat-box { padding: 36px 28px; background: rgba(255,255,255,0.03); text-align: center; }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--saffron-light); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .heritage-content .section-label { color: var(--saffron-light); }
+  .heritage-content .section-label::after { background: var(--saffron-light); }
+  .heritage-content .section-title { color: #fff; }
+  .heritage-content .section-sub { color: rgba(255,255,255,0.55); }
+  .heritage-quote { border-left: 3px solid var(--saffron); padding-left: 24px; margin-top: 36px; font-size: 17px; line-height: 1.75; color: rgba(255,255,255,0.7); font-style: italic; font-weight: 300; }
+
+  /* GIFTING */
+  .gifting-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 56px; }
+  .gift-card { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: all 0.3s; }
+  .gift-card:hover { box-shadow: 0 12px 40px rgba(28,18,8,0.1); transform: translateY(-4px); }
+  .gift-header { padding: 40px 28px 28px; text-align: center; }
+  .gift-icon { font-size: 44px; margin-bottom: 16px; }
+  .gift-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--dark); margin-bottom: 10px; }
+  .gift-desc { font-size: 15px; line-height: 1.65; color: var(--text-muted); font-weight: 300; }
+  .gift-footer { padding: 20px 28px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .gift-price { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--saffron); }
+  .gift-cta { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 2px; transition: color 0.2s; cursor: pointer; }
+  .gift-cta:hover { color: var(--rose); border-color: var(--rose); }
+  .gift-featured { border-color: var(--saffron); position: relative; }
+  .gift-featured::before { content: 'Most Popular'; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--saffron); color: #fff; font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 5px 16px; border-radius: 0 0 4px 4px; }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background: var(--saffron-pale); }
+  .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 56px; }
+  .testimonial-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 32px 28px; }
+  .stars { color: var(--saffron); font-size: 16px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testimonial-text { font-size: 16px; line-height: 1.75; color: var(--text); font-weight: 300; font-style: italic; margin-bottom: 24px; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--saffron-light); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; color: var(--saffron); }
+  .author-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--dark); }
+  .author-city { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 80px 8vw 40px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-brand .nav-logo { display: block; margin-bottom: 16px; color: #fff; }
+  .footer-brand p { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.45); font-weight: 300; max-width: 260px; }
+  .footer-col-title { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron-light); margin-bottom: 20px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { font-size: 15px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; font-weight: 300; }
+  .footer-links a:hover { color: var(--saffron-light); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 32px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════
+     ORDER MODAL OVERLAY
+  ═══════════════════════════════════════ */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(28,18,8,0.75);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+  .modal-box {
+    background: var(--cream);
+    border-radius: 8px;
+    width: 100%; max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(30px) scale(0.97);
+    transition: transform 0.3s ease;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  }
+  .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
+
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(28,18,8,0.08); border: none; cursor: pointer;
+    font-size: 18px; color: var(--text-muted);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--rose); color: #fff; }
+
+  .modal-header {
+    padding: 36px 40px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-step-indicator {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 24px;
+  }
+  .step-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(200,150,80,0.15);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative; z-index: 1;
+  }
+  .step-dot.active { background: var(--saffron); color: #fff; border-color: var(--saffron); }
+  .step-dot.done { background: var(--cardamom); color: #fff; border-color: var(--cardamom); }
+  .step-line { flex: 1; height: 1px; background: var(--border); }
+  .step-labels { display: flex; justify-content: space-between; margin-top: 8px; }
+  .step-label { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .step-label.active { color: var(--saffron); }
+
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--dark); }
+  .modal-subtitle { font-size: 15px; color: var(--text-muted); font-weight: 300; margin-top: 4px; }
+
+  .modal-body { padding: 28px 40px 36px; }
+
+  /* STEP PANELS */
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+
+  /* STEP 1: CUSTOMER DETAILS */
+  .form-group { margin-bottom: 22px; }
+  .form-label { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
+  .form-input {
+    width: 100%; padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--dark);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(232,160,32,0.1); }
+  .form-input.error { border-color: var(--rose); }
+  .form-input::placeholder { color: rgba(122,92,58,0.4); }
+  textarea.form-input { resize: vertical; min-height: 90px; }
+  .error-msg { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em; color: var(--rose); margin-top: 5px; display: none; }
+  .error-msg.show { display: block; }
+
+  /* STEP 2: ITEM SELECTION */
+  .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .order-item {
+    border: 1.5px solid var(--border);
+    border-radius: 6px; padding: 14px 16px;
+    cursor: pointer; transition: all 0.2s;
+    background: #fff;
+    display: flex; align-items: center; gap: 12px;
+    position: relative;
+  }
+  .order-item:hover { border-color: var(--saffron); box-shadow: 0 4px 16px rgba(232,160,32,0.12); }
+  .order-item.selected { border-color: var(--saffron); background: var(--saffron-pale); }
+  .order-item-emoji { font-size: 28px; flex-shrink: 0; }
+  .order-item-info { flex: 1; min-width: 0; }
+  .order-item-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .order-item-price { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: var(--saffron); letter-spacing: 0.05em; margin-top: 2px; }
+  .order-item-check {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: transparent;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .order-item.selected .order-item-check { background: var(--saffron); border-color: var(--saffron); color: #fff; }
+
+  /* Quantity controls */
+  .qty-controls {
+    display: none; align-items: center; gap: 8px;
+    margin-top: 8px;
+  }
+  .order-item.selected .qty-controls { display: flex; }
+  .qty-btn {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid var(--saffron);
+    background: transparent; cursor: pointer;
+    font-size: 14px; color: var(--saffron);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .qty-btn:hover { background: var(--saffron); color: #fff; }
+  .qty-num { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--dark); min-width: 20px; text-align: center; }
+
+  .selected-summary {
+    background: var(--saffron-pale);
+    border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.05em;
+    color: var(--text-muted);
+    display: none;
+  }
+  .selected-summary.show { display: block; }
+  .selected-summary strong { color: var(--saffron); font-size: 14px; }
+
+  /* STEP 3: CART */
+  .cart-list { margin-bottom: 20px; }
+  .cart-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cart-row:last-child { border-bottom: none; }
+  .cart-emoji { font-size: 28px; flex-shrink: 0; }
+  .cart-item-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; color: var(--dark); }
+  .cart-item-sub { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; margin-top: 2px; }
+  .cart-item-price { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; color: var(--saffron); margin-left: auto; }
+  .cart-remove { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 14px; padding: 4px; transition: color 0.2s; }
+  .cart-remove:hover { color: var(--rose); }
+  .cart-customer-info {
+    background: #fff; border: 1px solid var(--border); border-radius: 4px;
+    padding: 16px 20px; margin-bottom: 20px;
+  }
+  .cart-customer-info h4 { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 10px; }
+  .cart-customer-info p { font-size: 14px; color: var(--text-muted); font-weight: 300; margin-bottom: 4px; line-height: 1.6; }
+  .cart-customer-info p strong { color: var(--text); font-weight: 500; }
+  .cart-total-box {
+    background: var(--dark); border-radius: 4px;
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .cart-total-label { font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .cart-total-amount { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--saffron-light); }
+
+  /* STEP 4: UPI PAYMENT */
+  .upi-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .upi-logo { font-size: 48px; margin-bottom: 12px; }
+  .upi-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .upi-subtitle { font-size: 14px; color: var(--text-muted); font-weight: 300; margin-bottom: 28px; }
+  .upi-amount-badge {
+    display: inline-block;
+    background: var(--saffron-pale);
+    border: 1px solid rgba(232,160,32,0.4);
+    border-radius: 100px;
+    padding: 10px 28px;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--saffron);
+    margin-bottom: 28px;
+  }
+  .upi-qr {
+    width: 180px; height: 180px;
+    margin: 0 auto 20px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .upi-qr canvas { display: block; }
+  .upi-id-box {
+    background: var(--saffron-pale);
+    border: 1px dashed var(--saffron);
+    border-radius: 4px;
+    padding: 12px 20px;
+    margin: 0 auto 20px;
+    max-width: 280px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .upi-id-text { font-family: 'Josefin Sans', sans-serif; font-size: 14px; letter-spacing: 0.05em; color: var(--dark); font-weight: 600; }
+  .copy-btn {
+    background: var(--saffron); color: #fff; border: none; cursor: pointer;
+    padding: 6px 14px; border-radius: 2px;
+    font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; transition: background 0.2s;
+  }
+  .copy-btn:hover { background: var(--rose); }
+  .upi-apps { display: flex; gap: 12px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+  .upi-app-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border: 1px solid var(--border);
+    border-radius: 4px; cursor: pointer; background: #fff;
+    transition: all 0.2s; text-decoration: none;
+    font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.05em;
+    color: var(--dark);
+  }
+  .upi-app-btn:hover { border-color: var(--saffron); background: var(--saffron-pale); }
+  .upi-app-btn span { font-size: 18px; }
+
+  /* Pay button */
+  .btn-pay {
+    width: 100%; padding: 18px;
+    background: linear-gradient(135deg, #E8A020, #C8973C);
+    color: #fff; border: none; cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,32,0.4); }
+  .btn-pay:active { transform: translateY(0); }
+
+  /* SUCCESS */
+  .success-screen {
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+  }
+  .success-screen.show { display: block; }
+  .success-icon { font-size: 64px; margin-bottom: 16px; animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .success-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--cardamom); margin-bottom: 12px; }
+  .success-sub { font-size: 16px; color: var(--text-muted); font-weight: 300; line-height: 1.7; margin-bottom: 28px; }
+  .order-id { font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.1em; color: var(--text-muted); background: #fff; border: 1px dashed var(--border); padding: 10px 20px; border-radius: 4px; display: inline-block; }
+
+  /* NAV ACTIONS */
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+
+  /* MODAL FOOTER BTNS */
+  .modal-footer { display: flex; gap: 12px; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .btn-back { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 13px 24px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { border-color: var(--text-muted); color: var(--dark); }
+  .btn-next { font-family: 'Josefin Sans', sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; background: var(--saffron); color: #fff; border: none; padding: 14px 32px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+  .btn-next:hover { background: var(--dark); }
+
+  /* CART FLOATING TOAST */
+  .cart-toast { position: fixed; bottom: 32px; right: 32px; background: var(--dark); color: #fff; padding: 16px 24px; border-radius: 4px; display: flex; align-items: center; gap: 14px; font-family: 'Josefin Sans', sans-serif; font-size: 13px; letter-spacing: 0.05em; box-shadow: 0 8px 32px rgba(0,0,0,0.3); transform: translateY(120px); transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); z-index: 600; }
+  .cart-toast.show { transform: translateY(0); }
+  .cart-toast-emoji { font-size: 22px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .heritage { grid-template-columns: 1fr; }
+    .gifting-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .order-grid { grid-template-columns: 1fr; }
+    .modal-body { padding: 24px 24px 30px; }
+    .modal-header { padding: 28px 24px 20px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Mithai <span>Mahal</span></a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gifting">Gift Boxes</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-cart-btn" onclick="openCart()" id="navCartBtn" style="display:none;">
+      🛒 Cart <span class="cart-badge" id="navCartCount">0</span>
+    </button>
+    <a href="#" class="nav-cta" onclick="openOrderModal(); return false;">Order Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Est. 1962 · Handcrafted Daily</div>
+    <h1 class="hero-title">Sweets rooted in<br><em>tradition,</em><br>made with love</h1>
+    <p class="hero-subtitle">Three generations of master halwais bringing you the finest mithais — crafted from age-old recipes, pure ingredients, and unwavering pride.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="openOrderModal(); return false;">Explore Our Menu</a>
+      <a href="#gifting" class="btn-ghost">Gift Boxes →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-pattern"></div>
+    <svg class="hero-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="#C8973C" stroke-width="1"/>
+      <circle cx="200" cy="200" r="150" stroke="#C8973C" stroke-width="0.5"/>
+      <circle cx="200" cy="200" r="110" stroke="#C8973C" stroke-width="1"/>
+      <circle cx="200" cy="200" r="70" stroke="#C8973C" stroke-width="0.5"/>
+      <circle cx="200" cy="200" r="30" stroke="#C8973C" stroke-width="1"/>
+      <line x1="200" y1="10" x2="200" y2="390" stroke="#C8973C" stroke-width="0.5"/>
+      <line x1="10" y1="200" x2="390" y2="200" stroke="#C8973C" stroke-width="0.5"/>
+      <line x1="65" y1="65" x2="335" y2="335" stroke="#C8973C" stroke-width="0.5"/>
+      <line x1="335" y1="65" x2="65" y2="335" stroke="#C8973C" stroke-width="0.5"/>
+      <polygon points="200,30 220,80 200,70 180,80" fill="#C8973C" opacity="0.5"/>
+      <polygon points="200,370 220,320 200,330 180,320" fill="#C8973C" opacity="0.5"/>
+      <polygon points="30,200 80,220 70,200 80,180" fill="#C8973C" opacity="0.5"/>
+      <polygon points="370,200 320,220 330,200 320,180" fill="#C8973C" opacity="0.5"/>
+    </svg>
+    <div class="hero-cards">
+      <div class="hero-float-card card-1"><div class="emoji">🟡</div><div class="name">Gulab Jamun</div><div class="tag">Bengal</div></div>
+      <div class="hero-float-card card-2"><div class="emoji">🌀</div><div class="name">Jalebi</div><div class="tag">North India</div></div>
+      <div class="hero-float-card card-3"><div class="emoji">🟤</div><div class="name">Ladoo</div><div class="tag">Pan India</div></div>
+      <div class="hero-float-card card-4"><div class="emoji">💎</div><div class="name">Kaju Katli</div><div class="tag">Premium</div></div>
+      <div class="hero-float-card card-5"><div class="emoji">🍮</div><div class="name">Rasmalai</div><div class="tag">Bestseller</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Gulab Jamun</span><span class="dot">✦</span><span>Jalebi</span><span class="dot">✦</span><span>Rasgulla</span><span class="dot">✦</span><span>Kaju Katli</span><span class="dot">✦</span><span>Rasmalai</span><span class="dot">✦</span><span>Ladoo</span><span class="dot">✦</span><span>Barfi</span><span class="dot">✦</span><span>Modak</span><span class="dot">✦</span><span>Mysore Pak</span><span class="dot">✦</span><span>Kheer</span><span class="dot">✦</span>
+    <span>Gulab Jamun</span><span class="dot">✦</span><span>Jalebi</span><span class="dot">✦</span><span>Rasgulla</span><span class="dot">✦</span><span>Kaju Katli</span><span class="dot">✦</span><span>Rasmalai</span><span class="dot">✦</span><span>Ladoo</span><span class="dot">✦</span><span>Barfi</span><span class="dot">✦</span><span>Modak</span><span class="dot">✦</span><span>Mysore Pak</span><span class="dot">✦</span><span>Kheer</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="reveal">
+    <div class="section-label">Our Menu</div>
+    <h2 class="section-title">19 varieties of<br>pure bliss</h2>
+    <p class="section-sub">Every piece is handcrafted using traditional recipes, sourced from the finest dairies and farms across India.</p>
+  </div>
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" onclick="filterMenu('all', this)">All</button>
+    <button class="filter-btn" onclick="filterMenu('bengal', this)">Bengali</button>
+    <button class="filter-btn" onclick="filterMenu('north', this)">North Indian</button>
+    <button class="filter-btn" onclick="filterMenu('south', this)">South Indian</button>
+    <button class="filter-btn" onclick="filterMenu('festival', this)">Festival</button>
+    <button class="filter-btn" onclick="filterMenu('premium', this)">Premium</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- HERITAGE -->
+<div class="heritage" id="about">
+  <div class="heritage-stats reveal">
+    <div class="stat-box"><div class="stat-number">62+</div><div class="stat-label">Years of Craft</div></div>
+    <div class="stat-box"><div class="stat-number">19</div><div class="stat-label">Varieties</div></div>
+    <div class="stat-box"><div class="stat-number">3</div><div class="stat-label">Generations</div></div>
+    <div class="stat-box"><div class="stat-number">50k+</div><div class="stat-label">Happy Families</div></div>
+  </div>
+  <div class="heritage-content reveal">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">A legacy sweeter<br>than sugar</h2>
+    <p class="section-sub">Started in a small kitchen in 1962, Mithai Mahal has been the pride of every celebration — from Diwali to weddings, from simple chai-time treats to festival feasts.</p>
+    <blockquote class="heritage-quote">"My grandfather always said: use only the purest ingredients, take your time, and cook with love. That's the only recipe that matters."<br><br>— Ramesh Agarwal, Third Generation Halwai</blockquote>
+  </div>
+</div>
+
+<!-- GIFTING -->
+<section id="gifting">
+  <div class="reveal">
+    <div class="section-label">Gift Boxes</div>
+    <h2 class="section-title">Share sweetness,<br>share joy</h2>
+    <p class="section-sub">Curated gift boxes for every occasion — beautifully packaged, thoughtfully composed.</p>
+  </div>
+  <div class="gifting-grid">
+    <div class="gift-card reveal">
+      <div class="gift-header" style="background: var(--saffron-pale);">
+        <div class="gift-icon">🎁</div>
+        <div class="gift-title">Classic Box</div>
+        <div class="gift-desc">A selection of 6 of our all-time favourites — perfect for gifting on any occasion.</div>
+      </div>
+      <div class="gift-footer">
+        <div class="gift-price">₹399</div>
+        <span class="gift-cta" onclick="openOrderModal()">Order →</span>
+      </div>
+    </div>
+    <div class="gift-card gift-featured reveal">
+      <div class="gift-header" style="background: #FFF8E7; padding-top:52px;">
+        <div class="gift-icon">🪔</div>
+        <div class="gift-title">Festival Special</div>
+        <div class="gift-desc">12 premium sweets including Kaju Katli, Rasmalai and Pedha in a handcrafted box.</div>
+      </div>
+      <div class="gift-footer">
+        <div class="gift-price">₹799</div>
+        <span class="gift-cta" onclick="openOrderModal()">Order →</span>
+      </div>
+    </div>
+    <div class="gift-card reveal">
+      <div class="gift-header" style="background: var(--rose-pale);">
+        <div class="gift-icon">💍</div>
+        <div class="gift-title">Wedding Hamper</div>
+        <div class="gift-desc">Grand assortment of 24 premium sweets, custom printed with your wedding theme.</div>
+      </div>
+      <div class="gift-footer">
+        <div class="gift-price">₹1,599</div>
+        <span class="gift-cta" onclick="openOrderModal()">Order →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="contact">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">What People Say</div>
+    <h2 class="section-title">Loved across generations</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The Kaju Katli melts on your tongue. I've been ordering from Mithai Mahal for every Diwali for the past 15 years — nothing comes close."</p>
+      <div class="testimonial-author"><div class="author-avatar">P</div><div><div class="author-name">Priya Sharma</div><div class="author-city">Delhi</div></div></div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Ordered the wedding hamper for 200 guests. Every single guest asked where the sweets were from. The Rasmalai was absolutely divine."</p>
+      <div class="testimonial-author"><div class="author-avatar">A</div><div><div class="author-name">Arjun Mehta</div><div class="author-city">Mumbai</div></div></div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The Gajar ka Halwa tastes exactly like my grandmother used to make. Such a rare thing to find in today's world. Pure, honest, homemade."</p>
+      <div class="testimonial-author"><div class="author-avatar">S</div><div><div class="author-name">Sunita Agarwal</div><div class="author-city">Jaipur</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="color:#fff;">Mithai <span>Mahal</span></a>
+      <p>Handcrafted mithais since 1962. Three generations of passion, purity, and sweetness.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#">Gulab Jamun</a></li><li><a href="#">Jalebi</a></li><li><a href="#">Kaju Katli</a></li><li><a href="#">Rasmalai</a></li><li><a href="#">All Sweets →</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Gift Boxes</a></li><li><a href="#">Bulk Orders</a></li><li><a href="#">Wedding Catering</a></li><li><a href="#">Festival Hampers</a></li><li><a href="#">Home Delivery</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#">📍 M.G. Road, Jhumri Telaiya</a></li>
+        <li><a href="#">📞 +91 98765 43210</a></li>
+        <li><a href="#">✉️ hello@mithaimahal.in</a></li>
+        <li><a href="#">⏰ 8am – 9pm daily</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2024 Mithai Mahal. All rights reserved. Made with ❤️ in Jharkhand.</span>
+    <span class="footer-copy">Pure · Handcrafted · Trusted Since 1962</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     ORDER MODAL
+═══════════════════════════════════════ -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeOrderModal()">✕</button>
+
+    <div class="modal-header">
+      <!-- Step Indicator -->
+      <div class="modal-step-indicator">
+        <div class="step-dot active" id="dot1">1</div>
+        <div class="step-line"></div>
+        <div class="step-dot" id="dot2">2</div>
+        <div class="step-line"></div>
+        <div class="step-dot" id="dot3">3</div>
+        <div class="step-line"></div>
+        <div class="step-dot" id="dot4">4</div>
+      </div>
+      <div class="step-labels">
+        <span class="step-label active" id="lbl1">Details</span>
+        <span class="step-label" id="lbl2">Items</span>
+        <span class="step-label" id="lbl3">Cart</span>
+        <span class="step-label" id="lbl4">Pay</span>
+      </div>
+      <div style="margin-top: 20px;">
+        <div class="modal-title" id="modalTitle">Your Details</div>
+        <div class="modal-subtitle" id="modalSubtitle">Tell us where to deliver your sweets</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- STEP 1: CUSTOMER DETAILS -->
+      <div class="step-panel active" id="step1">
+        <div class="form-group">
+          <label class="form-label" for="custName">Full Name *</label>
+          <input class="form-input" type="text" id="custName" placeholder="e.g. Ramesh Agarwal">
+          <div class="error-msg" id="errName">Please enter your name</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="custPhone">Mobile Number *</label>
+          <input class="form-input" type="tel" id="custPhone" placeholder="e.g. 9876543210" maxlength="10">
+          <div class="error-msg" id="errPhone">Please enter a valid 10-digit number</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="custAddress">Delivery Address *</label>
+          <textarea class="form-input" id="custAddress" placeholder="House no., Street, Area, City, PIN..."></textarea>
+          <div class="error-msg" id="errAddress">Please enter your delivery address</div>
+        </div>
+        <div class="modal-footer">
+          <span></span>
+          <button class="btn-next" onclick="goStep2()">Continue to Items →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: ITEM SELECTION -->
+      <div class="step-panel" id="step2">
+        <div class="selected-summary" id="selSummary">
+          <strong id="selCount">0 items</strong> selected · Total: <strong id="selTotal">₹0</strong>
+        </div>
+        <div class="order-grid" id="orderGrid"></div>
+        <div class="modal-footer">
+          <button class="btn-back" onclick="goStep1()">← Back</button>
+          <button class="btn-next" onclick="goStep3()">View Cart →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: CART REVIEW -->
+      <div class="step-panel" id="step3">
+        <div class="cart-customer-info">
+          <h4>📦 Delivering to</h4>
+          <p><strong id="cartName">—</strong></p>
+          <p id="cartPhone">—</p>
+          <p id="cartAddress" style="line-height:1.5;">—</p>
+        </div>
+        <div class="cart-list" id="cartList"></div>
+        <div class="cart-total-box">
+          <div>
+            <div class="cart-total-label">Order Total</div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Incl. all taxes</div>
+          </div>
+          <div class="cart-total-amount" id="cartTotal">₹0</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-back" onclick="goStep2()">← Edit Items</button>
+          <button class="btn-next" onclick="goStep4()">Proceed to Pay →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: UPI PAYMENT -->
+      <div class="step-panel" id="step4">
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon">🎉</div>
+          <div class="success-title">Order Placed!</div>
+          <div class="success-sub">Thank you for your order!<br>We'll call you on <strong id="confirmPhone"></strong> to confirm delivery.</div>
+          <div class="order-id" id="orderId"></div>
+          <br><br>
+          <button class="btn-next" onclick="closeOrderModal()" style="margin:0 auto;display:block;">Back to Home</button>
+        </div>
+        <div id="paymentPanel">
+          <div class="upi-box">
+            <div class="upi-logo">💳</div>
+            <div class="upi-title">Pay via UPI</div>
+            <div class="upi-subtitle">Scan QR or use any UPI app to pay</div>
+            <div class="upi-amount-badge" id="payAmount">₹0</div>
+            <div class="upi-qr" id="qrBox">
+              <canvas id="qrCanvas" width="160" height="160"></canvas>
+            </div>
+            <div class="upi-id-box">
+              <span class="upi-id-text" id="upiIdDisplay">mithaimahal@upi</span>
+              <button class="copy-btn" onclick="copyUPI()">Copy</button>
+            </div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:16px;text-transform:uppercase;">Or open with</div>
+            <div class="upi-apps">
+              <a class="upi-app-btn" href="#" onclick="openUPIApp('gpay'); return false;"><span>🅖</span> GPay</a>
+              <a class="upi-app-btn" href="#" onclick="openUPIApp('phonepe'); return false;"><span>📲</span> PhonePe</a>
+              <a class="upi-app-btn" href="#" onclick="openUPIApp('paytm'); return false;"><span>💜</span> Paytm</a>
+              <a class="upi-app-btn" href="#" onclick="openUPIApp('bhim'); return false;"><span>🇮🇳</span> BHIM</a>
+            </div>
+          </div>
+          <button class="btn-pay" onclick="confirmPayment()">
+            <span>✓</span> Confirm Payment · <span id="payBtnAmt">₹0</span>
+          </button>
+          <div style="text-align:center;margin-top:12px;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:0.08em;color:var(--text-muted);">
+            After paying on your UPI app, click "Confirm Payment" above
+          </div>
+          <div class="modal-footer" style="margin-top:16px;">
+            <button class="btn-back" onclick="goStep3()">← Back to Cart</button>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="cartToast">
+  <span class="cart-toast-emoji">🛒</span>
+  <span id="cartMsg">Added to cart!</span>
+</div>
+
+<script>
+/* ─── DATA ─── */
+const sweets = [
+  { id:1, name:"Gulab Jamun", region:"Bengali / Pan India", desc:"Soft khoya dumplings soaked in rose-cardamom sugar syrup.", price:180, per:"250g", emoji:"🟡", bg:"bg-saffron", tag:"popular", category:["bengal","north"] },
+  { id:2, name:"Jalebi", region:"North India", desc:"Crispy spirals of fermented batter, fried golden & soaked in saffron syrup.", price:120, per:"250g", emoji:"🌀", bg:"bg-orange", tag:"popular", category:["north","festival"] },
+  { id:3, name:"Rasgulla", region:"Bengali", desc:"Spongy chenna balls simmered in light sugar syrup. The pride of Bengal.", price:160, per:"250g", emoji:"⚪", bg:"bg-rose", tag:"veg", category:["bengal"] },
+  { id:4, name:"Ladoo", region:"Pan India", desc:"Round melt-in-mouth besan or motichoor spheres rich with ghee & dry fruits.", price:200, per:"250g", emoji:"🟤", bg:"bg-brown", tag:"popular", category:["north","festival"] },
+  { id:5, name:"Barfi", region:"North India", desc:"Milk-solid fudge in classic plain, pista, or chocolate — silver-leafed.", price:220, per:"250g", emoji:"🔷", bg:"bg-green", tag:"veg", category:["north","premium"] },
+  { id:6, name:"Rasmalai", region:"Bengali", desc:"Flat chenna discs soaked in thickened saffron milk, studded with pistachios.", price:280, per:"250g", emoji:"🍮", bg:"bg-saffron", tag:"popular", category:["bengal","premium"] },
+  { id:7, name:"Gajar ka Halwa", region:"Punjab / North India", desc:"Slow-cooked grated carrot in pure ghee, milk & sugar — best served warm.", price:200, per:"250g", emoji:"🥕", bg:"bg-orange", tag:"veg", category:["north","festival"] },
+  { id:8, name:"Soan Papdi", region:"North India", desc:"Flaky, melt-away threads of gram flour dusted with sugar — light as air.", price:160, per:"250g", emoji:"✨", bg:"bg-saffron", tag:"popular", category:["north"] },
+  { id:9, name:"Kheer", region:"Pan India", desc:"Slow-simmered rice pudding in full-cream milk, cardamom & saffron.", price:140, per:"200g", emoji:"🍚", bg:"bg-rose", tag:"veg", category:["north","festival"] },
+  { id:10, name:"Pedha", region:"Mathura", desc:"Dense, fragrant milk solids pressed into discs — a Mathura heritage classic.", price:240, per:"250g", emoji:"🟠", bg:"bg-brown", tag:"veg", category:["north","premium"] },
+  { id:11, name:"Kaju Katli", region:"Pan India", desc:"Thin diamond-shaped cashew fudge draped in edible silver varq.", price:480, per:"250g", emoji:"💎", bg:"bg-green", tag:"premium", category:["premium","festival"] },
+  { id:12, name:"Modak", region:"Maharashtra", desc:"Steamed rice dumplings with coconut-jaggery filling. Lord Ganesha's favourite.", price:200, per:"250g", emoji:"🫙", bg:"bg-purple", tag:"festival", category:["south","festival"] },
+  { id:13, name:"Mysore Pak", region:"Karnataka", desc:"Crumbly ghee-rich gram flour fudge — the royal sweet of Mysore's palace kitchens.", price:260, per:"250g", emoji:"🟨", bg:"bg-orange", tag:"veg", category:["south"] },
+  { id:14, name:"Imarti", region:"North India", desc:"Crispy orange spirals made from urad dal — sharper & richer than jalebi.", price:130, per:"250g", emoji:"🌸", bg:"bg-rose", tag:"veg", category:["north"] },
+  { id:15, name:"Malpua", region:"Rajasthan / Odisha", desc:"Fried pancakes soaked in sugar syrup — crispy edges, soft centre.", price:150, per:"250g", emoji:"🫓", bg:"bg-brown", tag:"festival", category:["north","festival"] },
+  { id:16, name:"Shrikhand", region:"Gujarat / Maharashtra", desc:"Strained yoghurt sweetened with saffron, cardamom & dry fruits.", price:180, per:"200g", emoji:"🍯", bg:"bg-saffron", tag:"veg", category:["south"] },
+  { id:17, name:"Chenna Poda", region:"Odisha", desc:"Caramelised baked chhena — Odisha's beloved answer to cheesecake.", price:220, per:"250g", emoji:"🧀", bg:"bg-rose", tag:"veg", category:["bengal"] },
+  { id:18, name:"Balushahi", region:"Rajasthan", desc:"Flaky, glazed dough rounds — like Indian donuts, only better.", price:160, per:"250g", emoji:"🫔", bg:"bg-purple", tag:"veg", category:["north"] },
+  { id:19, name:"Anarsa", region:"Maharashtra", desc:"Rice flour & jaggery discs coated in poppy seeds — festive & fragrant.", price:190, per:"250g", emoji:"🫧", bg:"bg-green", tag:"festival", category:["south","festival"] },
+];
+
+/* ─── STATE ─── */
+const order = { name:'', phone:'', address:'', items:{} }; // items = {id: qty}
+const UPI_ID = 'mithaimahal@upi';
+
+/* ─── MENU GRID (main page) ─── */
+let activeFilter = 'all';
+function filterMenu(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu();
+}
+function renderMenu() {
+  const grid = document.getElementById('menuGrid');
+  const filtered = activeFilter === 'all' ? sweets : sweets.filter(s => s.category.includes(activeFilter));
+  grid.innerHTML = filtered.map(s => `
+    <div class="sweet-card reveal visible">
+      <div class="sweet-card-img ${s.bg}">
+        <span style="font-size:64px;">${s.emoji}</span>
+        <span class="sweet-card-badge ${s.tag==='popular'||s.tag==='premium'?'badge-popular':'badge-veg'}">
+          ${s.tag==='popular'?'Bestseller':s.tag==='premium'?'Premium':s.tag==='festival'?'🪔 Festival':'🌿 Pure Veg'}
+        </span>
+      </div>
+      <div class="sweet-card-body">
+        <div class="sweet-card-region">${s.region}</div>
+        <div class="sweet-card-name">${s.name}</div>
+        <div class="sweet-card-desc">${s.desc}</div>
+        <div class="sweet-card-footer">
+          <div class="sweet-card-price">₹${s.price} <span>/ ${s.per}</span></div>
+          <button class="add-btn" onclick="openOrderModal(${s.id})" title="Order now">+</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── MODAL OPEN / CLOSE ─── */
+function openOrderModal(preSelectId) {
+  if (preSelectId) {
+    if (!order.items[preSelectId]) order.items[preSelectId] = 1;
+    else order.items[preSelectId]++;
+    updateNavCart();
+  }
+  document.getElementById('orderModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  showStep(1);
+}
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function openCart() {
+  document.getElementById('orderModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (order.name) showStep(3);
+  else showStep(1);
+}
+
+/* ─── STEP NAVIGATION ─── */
+let currentStep = 1;
+function showStep(n) {
+  currentStep = n;
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+
+  // dots
+  for(let i=1;i<=4;i++){
+    const d = document.getElementById('dot'+i);
+    const l = document.getElementById('lbl'+i);
+    d.classList.remove('active','done');
+    l.classList.remove('active');
+    if(i < n){ d.classList.add('done'); d.textContent = '✓'; }
+    else if(i === n){ d.classList.add('active'); d.textContent = i; l.classList.add('active'); }
+    else { d.textContent = i; }
+  }
+
+  const titles = {
+    1: ['Your Details', 'Tell us where to deliver your sweets'],
+    2: ['Choose Your Sweets', 'Select items and quantities'],
+    3: ['Your Cart', 'Review your order before payment'],
+    4: ['Complete Payment', 'Pay securely via UPI']
+  };
+  document.getElementById('modalTitle').textContent = titles[n][0];
+  document.getElementById('modalSubtitle').textContent = titles[n][1];
+
+  if(n===2) renderOrderGrid();
+  if(n===3) renderCart();
+  if(n===4) renderPayment();
+}
+
+/* ─── STEP 1 → 2 ─── */
+function goStep1() { showStep(1); }
+function goStep2() { showStep(2); }
+function goStep1Validate() {
+  let ok = true;
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const addr = document.getElementById('custAddress').value.trim();
+  ['errName','errPhone','errAddress'].forEach(id => document.getElementById(id).classList.remove('show'));
+  ['custName','custPhone','custAddress'].forEach(id => document.getElementById(id).classList.remove('error'));
+  if(!name){ document.getElementById('errName').classList.add('show'); document.getElementById('custName').classList.add('error'); ok=false; }
+  if(!/^[6-9]\d{9}$/.test(phone)){ document.getElementById('errPhone').classList.add('show'); document.getElementById('custPhone').classList.add('error'); ok=false; }
+  if(addr.length < 10){ document.getElementById('errAddress').classList.add('show'); document.getElementById('custAddress').classList.add('error'); ok=false; }
+  if(ok){ order.name=name; order.phone=phone; order.address=addr; }
+  return ok;
+}
+function goStep2() { if(goStep1Validate()) showStep(2); }
+
+/* ─── ORDER GRID ─── */
+function renderOrderGrid() {
+  const grid = document.getElementById('orderGrid');
+  grid.innerHTML = sweets.map(s => {
+    const qty = order.items[s.id] || 0;
+    const sel = qty > 0;
+    return `
+    <div class="order-item ${sel?'selected':''}" id="oi${s.id}" onclick="toggleItem(${s.id})">
+      <div class="order-item-emoji">${s.emoji}</div>
+      <div class="order-item-info">
+        <div class="order-item-name">${s.name}</div>
+        <div class="order-item-price">₹${s.price} / ${s.per}</div>
+        <div class="qty-controls" onclick="event.stopPropagation()">
+          <button class="qty-btn" onclick="changeQty(${s.id},-1)">−</button>
+          <span class="qty-num" id="qty${s.id}">${qty}</span>
+          <button class="qty-btn" onclick="changeQty(${s.id},1)">+</button>
+        </div>
+      </div>
+      <div class="order-item-check" id="chk${s.id}">${sel?'✓':''}</div>
+    </div>`;
+  }).join('');
+  updateSelSummary();
+}
+
+function toggleItem(id) {
+  if(order.items[id]) {
+    delete order.items[id];
+  } else {
+    order.items[id] = 1;
+  }
+  renderOrderGrid();
+  updateNavCart();
+}
+
+function changeQty(id, delta) {
+  order.items[id] = (order.items[id] || 0) + delta;
+  if(order.items[id] <= 0) delete order.items[id];
+  const el = document.getElementById('oi'+id);
+  const chk = document.getElementById('chk'+id);
+  const qtyEl = document.getElementById('qty'+id);
+  if(order.items[id]) {
+    el.classList.add('selected');
+    chk.textContent = '✓';
+    qtyEl.textContent = order.items[id];
+  } else {
+    el.classList.remove('selected');
+    chk.textContent = '';
+    qtyEl.textContent = 0;
+  }
+  updateSelSummary();
+  updateNavCart();
+}
+
+function updateSelSummary() {
+  const ids = Object.keys(order.items);
+  const total = ids.reduce((s,id) => s + sweets.find(x=>x.id==id).price * order.items[id], 0);
+  const totalQty = ids.reduce((s,id) => s + order.items[id], 0);
+  const summary = document.getElementById('selSummary');
+  document.getElementById('selCount').textContent = totalQty + ' item' + (totalQty!==1?'s':'');
+  document.getElementById('selTotal').textContent = '₹'+total;
+  summary.classList.toggle('show', ids.length > 0);
+}
+
+/* ─── STEP 3: CART ─── */
+function goStep3() {
+  if(Object.keys(order.items).length === 0) {
+    showToast('Please select at least one sweet! 🍬');
+    return;
+  }
+  showStep(3);
+}
+
+function renderCart() {
+  document.getElementById('cartName').textContent = order.name;
+  document.getElementById('cartPhone').textContent = '📞 ' + order.phone;
+  document.getElementById('cartAddress').textContent = '📍 ' + order.address;
+
+  const ids = Object.keys(order.items);
+  let total = 0;
+  document.getElementById('cartList').innerHTML = ids.map(id => {
+    const s = sweets.find(x=>x.id==id);
+    const qty = order.items[id];
+    const sub = s.price * qty;
+    total += sub;
+    return `
+    <div class="cart-row">
+      <span class="cart-emoji">${s.emoji}</span>
+      <div style="flex:1;">
+        <div class="cart-item-name">${s.name}</div>
+        <div class="cart-item-sub">₹${s.price} × ${qty} ${s.per}</div>
+      </div>
+      <div class="cart-item-price">₹${sub}</div>
+      <button class="cart-remove" onclick="removeCartItem(${id})" title="Remove">✕</button>
+    </div>`;
+  }).join('');
+  document.getElementById('cartTotal').textContent = '₹' + total;
+}
+
+function removeCartItem(id) {
+  delete order.items[id];
+  updateNavCart();
+  if(Object.keys(order.items).length === 0) {
+    showStep(2);
+  } else {
+    renderCart();
+  }
+}
+
+/* ─── STEP 4: PAYMENT ─── */
+function goStep4() { showStep(4); }
+function renderPayment() {
+  const ids = Object.keys(order.items);
+  const total = ids.reduce((s,id) => s + sweets.find(x=>x.id==id).price * order.items[id], 0);
+  document.getElementById('payAmount').textContent = '₹' + total;
+  document.getElementById('payBtnAmt').textContent = '₹' + total;
+  document.getElementById('upiIdDisplay').textContent = UPI_ID;
+  document.getElementById('successScreen').classList.remove('show');
+  document.getElementById('paymentPanel').style.display = 'block';
+  generateQR(total);
+}
+
+function generateQR(amount) {
+  const upiString = `upi://pay?pa=${UPI_ID}&pn=Mithai+Mahal&am=${amount}&cu=INR&tn=Mithai+Order`;
+  const canvas = document.getElementById('qrCanvas');
+  const ctx = canvas.getContext('2d');
+  const size = 160;
+  canvas.width = size; canvas.height = size;
+
+  // Draw a simple visual QR placeholder with the UPI string encoded as pattern
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0,0,size,size);
+
+  // Generate deterministic pattern from upiString
+  const modules = 21;
+  const mod = Math.floor(size / modules);
+  let hash = 0;
+  for(let c of upiString){ hash = ((hash<<5)-hash)+c.charCodeAt(0); hash|=0; }
+  const seed = Math.abs(hash);
+
+  function pseudo(i){ return ((seed * 1664525 + i * 22695477) & 0x7fffffff) % 2 === 0; }
+
+  ctx.fillStyle = '#1C1208';
+  let idx = 0;
+  for(let r=0;r<modules;r++){
+    for(let c=0;c<modules;c++){
+      // Finder patterns
+      const isFinderTL = (r<7&&c<7);
+      const isFinderTR = (r<7&&c>=modules-7);
+      const isFinderBL = (r>=modules-7&&c<7);
+      if(isFinderTL||isFinderTR||isFinderBL){
+        const lr = isFinderTL?r:(isFinderTR?r:r-(modules-7));
+        const lc = isFinderTL?c:(isFinderTR?c-(modules-7):c);
+        if(lr===0||lr===6||lc===0||lc===6||(lr>=2&&lr<=4&&lc>=2&&lc<=4)){
+          ctx.fillRect(c*mod,r*mod,mod-1,mod-1);
+        }
+      } else {
+        if(pseudo(idx++)){ ctx.fillRect(c*mod,r*mod,mod-1,mod-1); }
+      }
+    }
+  }
+  // White separator around finders
+  ctx.fillStyle='#fff';
+  [0,1,7].forEach(r=>{ for(let c=0;c<8;c++) ctx.fillRect(c*mod,r*mod,mod,mod); });
+  ctx.fillStyle='#1C1208';
+  // Redraw finders cleanly
+  [[0,0],[0,modules-7],[modules-7,0]].forEach(([fr,fc])=>{
+    ctx.fillStyle='#1C1208';
+    for(let r=fr;r<fr+7;r++) for(let c=fc;c<fc+7;c++){
+      const lr=r-fr,lc=c-fc;
+      ctx.fillStyle=(lr===0||lr===6||lc===0||lc===6||(lr>=2&&lr<=4&&lc>=2&&lc<=4))?'#1C1208':'#fff';
+      ctx.fillRect(c*mod,r*mod,mod,mod);
+    }
+  });
+}
+
+function openUPIApp(app) {
+  const ids = Object.keys(order.items);
+  const total = ids.reduce((s,id) => s + sweets.find(x=>x.id==id).price * order.items[id], 0);
+  const upiUrl = `upi://pay?pa=${UPI_ID}&pn=Mithai+Mahal&am=${total}&cu=INR&tn=Mithai+Order`;
+  window.location.href = upiUrl;
+}
+
+function copyUPI() {
+  navigator.clipboard.writeText(UPI_ID).catch(()=>{});
+  const btn = event.target;
+  btn.textContent = 'Copied!';
+  btn.style.background = '#4A7C59';
+  setTimeout(()=>{ btn.textContent='Copy'; btn.style.background=''; }, 2000);
+}
+
+function confirmPayment() {
+  const ids = Object.keys(order.items);
+  const total = ids.reduce((s,id) => s + sweets.find(x=>x.id==id).price * order.items[id], 0);
+  const orderId = 'MM' + Date.now().toString().slice(-8).toUpperCase();
+  document.getElementById('confirmPhone').textContent = order.phone;
+  document.getElementById('orderId').textContent = '🧾 Order ID: ' + orderId;
+  document.getElementById('paymentPanel').style.display = 'none';
+  document.getElementById('successScreen').classList.add('show');
+
+  // Reset cart
+  Object.keys(order.items).forEach(k => delete order.items[k]);
+  updateNavCart();
+}
+
+/* ─── NAV CART ─── */
+function updateNavCart() {
+  const total = Object.values(order.items).reduce((s,q)=>s+q,0);
+  const btn = document.getElementById('navCartBtn');
+  document.getElementById('navCartCount').textContent = total;
+  btn.style.display = total > 0 ? 'flex' : 'none';
+}
+
+/* ─── TOAST ─── */
+let toastTimeout;
+function showToast(msg) {
+  const toast = document.getElementById('cartToast');
+  document.getElementById('cartMsg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(()=>toast.classList.remove('show'), 2800);
+}
+
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+
+/* ─── INIT ─── */
+renderMenu();
+setTimeout(()=>{ document.querySelectorAll('.reveal').forEach(el => observer.observe(el)); }, 100);
+
+// Close modal on overlay click
+document.getElementById('orderModal').addEventListener('click', function(e){
+  if(e.target === this) closeOrderModal();
+});
+</script>
+</body>
+</html>
